@@ -4212,6 +4212,8 @@ BEGIN;
                         );
                 END TRY
                 BEGIN CATCH
+                 Insert Into @buffer_results(EventType,Parameters,EventInfo) Values(N'Invalid SPID', 0, Error_Message())
+                    -- to handle cases where the inputbuffer changes prior to writing to avoid INVALID SPID error
                 END CATCH;
 
                 FETCH NEXT FROM buffer_cursor
